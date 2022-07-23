@@ -58,15 +58,15 @@ def main_job():
                             posts_dict.append(temp)
                         send_message(posts_dict, user, message, str(subreddit), return_type)
                     except Exception as e:
-                        send_message("Invalid subreddit or Invalid type {}\n".format(return_type), user, message, str(subreddit), return_type)
+                        send_message("Invalid subreddit or Invalid type {}\n".format(return_type), user, message)
                         continue
             else:
                 temp = "Your request has not been handled. Make sure you have enterered correct Subject\n"
-                send_message(temp, user, message, str(subreddit), return_type)
+                send_message(temp, user, message)
         message.mark_read()
 
 
-def send_message(body, username, instance, subreddit, return_type):
+def send_message(body, username, instance, subreddit = None, return_type = None):
     reddit = reddit_instance()
     if(isinstance(body, list)):
         message = "Here are the {} {} posts of the day from {} subreddit:\n".format(return_type, len(body), subreddit)
@@ -80,6 +80,7 @@ def send_message(body, username, instance, subreddit, return_type):
             message += "\n"
     else:
         message = body
+        message += "\n"
 
     message += "Your replies here will be ignored as this is an automated message.\n"
     if instance.author == username:
